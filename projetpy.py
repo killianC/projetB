@@ -6,6 +6,7 @@ import http.server
 import socketserver
 from urllib.parse import urlparse, parse_qs, unquote
 import json
+import sqlite3
 
 # définition du handler
 class RequestHandler(http.server.SimpleHTTPRequestHandler):
@@ -22,7 +23,6 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
 
     # requete location - retourne la liste de lieux et leurs coordonnées géogrpahiques
     if self.path_info[0] == "location":
-        import sqlite3
         conn = sqlite3.connect('stations-acoucite-2018.db')
         c = conn.cursor()
         c.execute("SELECT * FROM 'stations-acoucite-2018'")
