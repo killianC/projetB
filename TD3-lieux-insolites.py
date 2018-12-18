@@ -2,6 +2,8 @@
 
 # Application exemple : affichage de mes lieux préférés à la Croix-Rousse 2018-10-24
 
+#test
+
 import http.server
 import socketserver
 from urllib.parse import urlparse, parse_qs, unquote
