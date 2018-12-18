@@ -33,7 +33,7 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
             dicotempo['id']=k+1
             dicotempo['lat']=float(r[k][1])
             dicotempo['lon']=float(r[k][0])
-            dicotempo['name']='"'+r[k][4]+'"'
+            dicotempo['name']=r[k][4]
             data.append(dicotempo)
         self.send_json(data)
 
