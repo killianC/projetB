@@ -1,9 +1,11 @@
-# TD3-serveur1.py
-#SLt
+# TD3-lieux-insolites.py
+
+# Application exemple : affichage de mes lieux préférés à la Croix-Rousse 2018-10-24
+
 import http.server
 import socketserver
 from urllib.parse import urlparse, parse_qs, unquote
-
+import json
 
 # définition du handler
 class RequestHandler(http.server.SimpleHTTPRequestHandler):
@@ -12,19 +14,28 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
   static_dir = '/client'
 
   # version du serveur
-  server_version = 'TD3-serveur1.py/0.1'
+  server_version = 'TD4/serveur.py/0.1'
 
   # on surcharge la méthode qui traite les requêtes GET
   def do_GET(self):
     self.init_params()
 
-    # prénom et nom dans le chemin d'accès
-    if self.path_info[0] == 'coucou':
-      self.send_html('<p>Bonjour {} {}</p>'.format(*self.path_info[1:]))
+    # requete location - retourne la liste de lieux et leurs coordonnées géogrpahiques
+    if self.path_info[0] == "location":
+      data=[{'id':1,'lat':45.76843,'lon':4.82667,'name':"Rue Couverte"},
+            {'id':2,'lat':45.77128,'lon':4.83251,'name':"Rue Caponi"},
+            {'id':3,'lat':45.78061,'lon':4.83196,'name':"Jardin Rosa-Mir"}]
+      self.send_json(data)
 
-    # prénom et nom dans la chaîne de requête
-    elif self.path_info[0] == "toctoc":
-      self.send_toctoc()
+    # requete description - retourne la description du lieu dont on passe l'id en paramètre dans l'URL
+    elif self.path_info[0] == "description":
+      data=[{'id':1,'desc':"Il ne faut pas être <b>trop grand</b> pour marcher dans cette rue qui passe sous une maison"},
+            {'id':2,'desc':"Cette rue est <b>si étroite</b> qu'on touche les 2 côtés en tendant les bras !"},
+            {'id':3,'desc':"Ce jardin <b>méconnu</b> évoque le palais idéal du Facteur Cheval"}]
+      for c in data:
+        if c['id'] == int(self.path_info[1]):
+          self.send_json(c)
+          break
 
     # requête générique
     elif self.path_info[0] == "service":
@@ -40,28 +51,17 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
       self.send_static()
 
 
-  # méthode pour traiter les requêtes POST
+  # méthode pour traiter les requêtes POST - non utilisée dans l'exemple
   def do_POST(self):
     self.init_params()
 
-    # prénom et nom dans la chaîne de requête dans le corps
-    if self.path_info[0] == "toctoc":
-      self.send_toctoc()
-      
     # requête générique
-    elif self.path_info[0] == "service":
+    if self.path_info[0] == "service":
       self.send_html(('<p>Path info : <code>{}</code></p><p>Chaîne de requête : <code>{}</code></p>' \
           + '<p>Corps :</p><pre>{}</pre>').format('/'.join(self.path_info),self.query_string,self.body));
 
     else:
       self.send_error(405)
-
-  #
-  # On envoie un document le nom et le prénom
-  #    
-  def send_toctoc(self):    
-    # on envoie un document HTML contenant un seul paragraphe
-   self.send_html('<p>Bonjour {} {}</p>'.format(self.params['Prenom'][0],self.params['Nom'][0]))
 
 
   # on envoie le document statique demandé
@@ -85,6 +85,15 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
          .format(self.path_info[0],content)
      self.send(html,headers)
 
+  # on envoie un contenu encodé en json
+  def send_json(self,data,headers=[]):
+    body = bytes(json.dumps(data),'utf-8') # encodage en json et UTF-8
+    self.send_response(200)
+    self.send_header('Content-Type','application/json')
+    self.send_header('Content-Length',int(len(body)))
+    [self.send_header(*t) for t in headers]
+    self.end_headers()
+    self.wfile.write(body) 
 
   # on envoie la réponse
   def send(self,body,headers=[]):
@@ -98,13 +107,12 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
 
      self.wfile.write(encoded)
 
-  #     
+
   # on analyse la requête pour initialiser nos paramètres
-  #
   def init_params(self):
     # analyse de l'adresse
     info = urlparse(self.path)
-    self.path_info = [unquote(v) for v in info.path.split('/')[1:]]  # info.path.split('/')[1:]
+    self.path_info = [unquote(v) for v in info.path.split('/')[1:]]
     self.query_string = info.query
     self.params = parse_qs(info.query)
 
