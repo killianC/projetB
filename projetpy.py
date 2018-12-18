@@ -22,20 +22,20 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
 
     # requete location - retourne la liste de lieux et leurs coordonnées géogrpahiques
     if self.path_info[0] == "location":
-      data=[{'id':1,'lat':45.76843,'lon':4.82667,'name':"Rue Couverte"},
-            {'id':2,'lat':45.77128,'lon':4.83251,'name':"Rue Caponi"},
-            {'id':3,'lat':45.78061,'lon':4.83196,'name':"Jardin Rosa-Mir"}]
-      self.send_json(data)
-
-    # requete description - retourne la description du lieu dont on passe l'id en paramètre dans l'URL
-    elif self.path_info[0] == "description":
-      data=[{'id':1,'desc':"Il ne faut pas être <b>trop grand</b> pour marcher dans cette rue qui passe sous une maison"},
-            {'id':2,'desc':"Cette rue est <b>si étroite</b> qu'on touche les 2 côtés en tendant les bras !"},
-            {'id':3,'desc':"Ce jardin <b>méconnu</b> évoque le palais idéal du Facteur Cheval"}]
-      for c in data:
-        if c['id'] == int(self.path_info[1]):
-          self.send_json(c)
-          break
+        import sqlite3
+        conn = sqlite3.connect('stations-acoucite-2018.db')
+        c = conn.cursor()
+        c.execute("SELECT * FROM 'stations-acoucite-2018'")
+        r = c.fetchall()
+        data=[]
+        for k in range (len(r)):
+            dicotempo={}
+            dicotempo['id']=k+1
+            dicotempo['lat']=float(r[k][1])
+            dicotempo['lon']=float(r[k][0])
+            dicotempo['name']='"'+r[k][4]+'"'
+            data.append(dicotempo)
+        self.send_json(data)
 
     # requête générique
     elif self.path_info[0] == "service":
