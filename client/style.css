@@ -25,7 +25,9 @@ h1 {
   padding-bottom: 0.5em;
   margin-bottom: 1.33em;
 }
-
+caption {
+	color : black;
+}
 label {
 	color :black;
 	border : 10 em,solid, blue;
