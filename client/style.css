@@ -25,17 +25,24 @@ h1 {
   padding-bottom: 0.5em;
   margin-bottom: 1.33em;
 }
+
 caption {
 	color : black;
 }
+
 label {
 	color :black;
 	border : 10 em,solid, blue;
 	text-align : center ;
 }
+
 table {
 margin : auto;
 }
+table td {
+	margin : 5 em;
+}
+
 /* contenu de la page */
 body > * {   padding-left: 10px; }
 
