@@ -58,17 +58,15 @@ xhr.open('GET','/location',true);
 xhr.send();
 }
 
-//Inutilisé pour l'instant
+
 function OnMarkerClick (e) {
 var xhr = new XMLHttpRequest();
 xhr.onload = function() {   // fonction callback
     // récupération des données renvoyées par le serveur
 	var data = JSON.parse(this.responseText);
-	// affichage dans la zone 'description' du nom (reprise dans le popup) et de la description récupéré par l'appel au serveur
-	description.innerHTML =  '<b><i>' + e.target.getPopup().getContent() + '</i></b><br>'+ data.desc;
   };
 xhr.open('GET','/description/'+e.target.idnum,true);  // on récupère la description du lieu n° idnum par un appel au serveur
 xhr.send();
 }
-//Inutilisé pour l'instant
+
 </script>
