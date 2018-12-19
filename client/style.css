@@ -29,8 +29,11 @@ h1 {
 label {
 	color :black;
 	border : 10 em,solid, blue;
+	text-align : center ;
 }
-
+table {
+margin : auto;
+}
 /* contenu de la page */
 body > * {   padding-left: 10px; }
 
