@@ -28,10 +28,7 @@
 	<option>nuit</option>
 	<option>moyenne</option>
   </select>
-  <input type="submit" value="Soumettre" id="bouton" class="button">
-  <div id="reponse"/>
   </fieldset>  
-  </div>
  </body>
 
 
@@ -61,6 +58,7 @@ xhr.open('GET','/location',true);
 xhr.send();
 }
 
+//Inutilisé pour l'instant
 function OnMarkerClick (e) {
 var xhr = new XMLHttpRequest();
 xhr.onload = function() {   // fonction callback
@@ -72,4 +70,5 @@ xhr.onload = function() {   // fonction callback
 xhr.open('GET','/description/'+e.target.idnum,true);  // on récupère la description du lieu n° idnum par un appel au serveur
 xhr.send();
 }
+//Inutilisé pour l'instant
 </script>
