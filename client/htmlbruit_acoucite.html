@@ -26,10 +26,10 @@
   <td><label>Date de debut: <input type=date name="Deb" id="deb" value="2008-01-02" min="2008-01-02" max="2018-11-02"></label></td>
   <td><label>Date de fin: <input type=date name="Fin" id="fin" value="2018-11-02" min="2008-01-02" max="2018-11-02"></label></td>
   <td><select name="courbe" id="chcour">
-	<option value="day" selected="selected">jour</option>
-	<option value="den">soir</option>
-	<option value="evening">nuit</option>
-	<option value="night">moyenne</option>
+	<option value="lden" selected="selected">moyenne</option>
+	<option value="lday">jour</option>
+	<option value="levening">soir</option>
+	<option value="lnight">nuit</option>
   </select></td>
   </table>
   </fieldset>  
@@ -69,7 +69,7 @@ var datedeb = document.getElementById('deb').value
 var datefin = document.getElementById('fin').value
 var interm = document.getElementById('chcour')
 var choixcour = interm.options[interm.selectedIndex].value
-document.getElementById('description').innerHTML = datedeb +" "+ datefin + " " +choixcour
+document.getElementById('description').innerHTML = datedeb +"-"+ datefin + "-" +choixcour
 xhr.onload = function() {   // fonction callback
     // récupération des données renvoyées par le serveur
 	var data = JSON.parse(this.responseText);

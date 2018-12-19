@@ -1,6 +1,5 @@
-# TD3-lieux-insolites.py
-
-# Application exemple : affichage de mes lieux préférés à la Croix-Rousse 2018-10-24
+# Lien du serveur :
+# http://localhost:8080/htmlbruit_acoucite.html
 
 import http.server
 import socketserver
@@ -15,7 +14,7 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
   static_dir = '/client'
 
   # version du serveur
-  server_version = 'TD4/serveur.py/0.1'
+  server_version = 'ProjetB/serveurpy.py/0.1'
 
   # on surcharge la méthode qui traite les requêtes GET
   def do_GET(self):
