@@ -13,17 +13,22 @@
   <h1>Mesure de bruit par le réseau Acoucité</h1>
  
   <!-- Zone pour l'insertion de la carte OSM via Leaflet -->
+ 
   <div>
   <div id="map"></div>  
   <p/>
   <!-- Zone pour l'affichage dynamique des descriptions -->
   <p id="description"></p>
   <fieldset>
-  <label>Date de debut: <input type=date name="Deb" id="deb" value="2008-01-02" min="2008-01-02" max="2018-11-02"></label><br>
-  <label>Date de fin: <input type=date name="Fin" id="fin" value="2018-11-02" min="2008-01-02" max="2018-11-02"></label><br>
-  <select name="courbe" id="chcour">
-	<option value=1 selected="selected">jour</option>
-	<option> soir</option>
+  <table>
+  <caption>Choisisez vos paramètres d'affichage</caption>
+  <tr>
+  <td><label>Date de debut: <input type=date name="Deb" id="deb" value="2008-01-02" min="2008-01-02" max="2018-11-02"></label></td>
+  <td><label>Date de fin: <input type=date name="Fin" id="fin" value="2018-11-02" min="2008-01-02" max="2018-11-02"></label></td>
+  <td><select name="courbe">
+  	<option value="choixcourbe">Choix de la courbe</option>
+	<option>jour</option>
+	<option>soir</option>
 	<option>nuit</option>
 	<option>moyenne</option>
   </select></td>
