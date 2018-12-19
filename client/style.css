@@ -1,6 +1,6 @@
 ﻿/* fond de page */
 body {
-  background-image: linear-gradient(0deg, slateblue, black, black);
+  background-image: linear-gradient(0deg, #ffffff, #111111);
   background-size: 100%;
   background-repeat: no-repeat;
   color: white;
@@ -48,14 +48,15 @@ input, textarea {
 }
 
 .button {
-  border: 3px outset #444;
-  background-color: #3ff;
+  border: 3px outset rgba(34,34,34,0.7);
+  background-color: rgba(34,34,34,0.7);
   padding: 5px 0.5em;
   border-radius: 20px;
   display: inline-block;
   margin: 1em 0;
 
-  color: #b00;
+
+  color: #fff;
   text-shadow: #000 -1px -1px 0;
   right: calc(100% - 8em - 3px);
 }
