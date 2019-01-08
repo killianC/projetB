@@ -37,7 +37,7 @@ label {
 }
 
 #map {
-	border : 10 em,solid,white
+	border : 1em solid rgba(255,255,255,0.9)
 }
 
 table {
