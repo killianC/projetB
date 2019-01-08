@@ -40,9 +40,7 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
         
         donneesc[0]=nomstat
         self.creecourbe(self.path_info[1],donneesc)
-        html = '<img src="'+self.path_info[1]+'.png'+'"width="100%">'
-        headers = [('Content-Type','text/html;charset=utf-8')]
-        self.send(html,headers)
+        self.send(self.path_info[1])
         
     else:
       self.send_static()
@@ -95,6 +93,7 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
         else:
             vall.append(float(val[n-k-1][0]))
     vall.reverse()
+    plt.clf()
     plt.plot_date(t,vall,linewidth=1, linestyle='-', marker='o')
     fichier = url+'.png'
     plt.savefig('client/bdd/{}'.format(fichier))

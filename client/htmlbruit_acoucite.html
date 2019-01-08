@@ -78,11 +78,10 @@ var interm = document.getElementById('chcour')
 var choixcour = interm.options[interm.selectedIndex].value
 xhr.open('GET','/courbe/'+e.target.idnum + "-" + datedeb +"-"+ datefin + "-" + choixcour,true);  // on récupère la description du lieu n° idnum par un appel au serveur
 xhr.send();
-xhr.load= function() {  
+xhr.onload= function() {  
 	var url = this.responseText;
-	url = '/bdd/'+url
-	
-
+	url = '/bdd/'+url+'.png'
+	document.getElementById('graphe').src = url;
   };
 }
 
