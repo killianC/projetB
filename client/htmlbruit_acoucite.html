@@ -70,11 +70,6 @@ var datefin = document.getElementById('fin').value
 var interm = document.getElementById('chcour')
 var choixcour = interm.options[interm.selectedIndex].value
 document.getElementById('description').innerHTML = datedeb +"-"+ datefin + "-" +choixcour
-xhr.onload = function() {   // fonction callback
-    // récupération des données renvoyées par le serveur
-	var data = JSON.parse(this.responseText);
-
-  };
 xhr.open('GET','/description/'+e.target.idnum,true);  // on récupère la description du lieu n° idnum par un appel au serveur
 xhr.send();
 }
