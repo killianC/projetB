@@ -31,9 +31,9 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
                 donneesc[k]=int(donneesc[k])
         data=self.data()
         if data[donneesc[0]-1]["name"][-6:-2]=="CF22":
-            nomstat=data[donneesc[0]-1]["name"][-6:-1]+data[donneesc[0]-1]["name"][-1]
+            nomstat=data[donneesc[0]-1]["name"][-6:]
         else:
-            nomstat=data[donneesc[0]-1]["name"][-4:-1]+data[donneesc[0]-1]["name"][-1]
+            nomstat=data[donneesc[0]-1]["name"][-4:]
         donneesc[0]=nomstat
         print(donneesc)
         
