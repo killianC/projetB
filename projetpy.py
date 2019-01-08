@@ -12,7 +12,6 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
 
   # sous-répertoire racine des documents statiques
   static_dir = '/client'
-
   # version du serveur
   server_version = 'ProjetB/serveurpy.py/0.1'
 
@@ -20,31 +19,47 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
   def do_GET(self):
     self.init_params()
 
-    # requete location - retourne la liste de lieux et leurs coordonnées géogrpahiques
-    if self.path_info[0] == "location":
-        conn = sqlite3.connect('stations-acoucite-2018.db')
-        c = conn.cursor()
-        c.execute("SELECT * FROM 'stations-acoucite-2018'")
-        r = c.fetchall()
-        data=[]
-        for k in range (len(r)):
-            dicotempo={}
-            dicotempo['id']=k+1
-            dicotempo['lat']=float(r[k][1])
-            dicotempo['lon']=float(r[k][0])
-            dicotempo['name']=r[k][4]
-            data.append(dicotempo)
-        self.send_json(data)
+    # requete location - retourne la liste de lieux et leurs coordonnées géographiques
+    if self.path_info[0] == "location":     
+        self.send_json(self.data())
 
-    # requête générique
-    elif self.path_info[0] == "service":
-      self.send_html('<p>Path info : <code>{}</p><p>Chaîne de requête : <code>{}</code></p>' \
-          .format('/'.join(self.path_info),self.query_string));
-
+    elif self.path_info[0] == "courbe":
+        donneesc = self.path_info[1]
+        donneesc = donneesc.split("-")
+        for k in range (len(donneesc)):
+            if k!=len(donneesc)-1:
+                donneesc[k]=int(donneesc[k])
+        data=self.data()
+        if data[donneesc[0]-1]["name"][-6:-2]=="CF22":
+            nomstat=data[donneesc[0]-1]["name"][-6:-1]+data[donneesc[0]-1]["name"][-1]
+        else:
+            nomstat=data[donneesc[0]-1]["name"][-4:-1]+data[donneesc[0]-1]["name"][-1]
+        donneesc[0]=nomstat
+        print(donneesc)
+        
     else:
       self.send_static()
 
-
+ 
+    
+  #Methode annexe 
+    
+  def data(self):
+      conn = sqlite3.connect('stations-acoucite-2018.db')
+      c = conn.cursor()
+      c.execute("SELECT * FROM 'stations-acoucite-2018'")
+      r = c.fetchall()
+      data=[]
+      for k in range (len(r)):
+          dicotempo={}
+          dicotempo['id']=k+1
+          dicotempo['lat']=float(r[k][1])
+          dicotempo['lon']=float(r[k][0])
+          dicotempo['name']=r[k][4]
+          data.append(dicotempo)
+      return(data)
+      
+      
   # méthode pour traiter les requêtes HEAD
   def do_HEAD(self):
       self.send_static()

@@ -69,8 +69,7 @@ var datedeb = document.getElementById('deb').value
 var datefin = document.getElementById('fin').value
 var interm = document.getElementById('chcour')
 var choixcour = interm.options[interm.selectedIndex].value
-document.getElementById('description').innerHTML = datedeb +"-"+ datefin + "-" +choixcour
-xhr.open('GET','/description/'+e.target.idnum,true);  // on récupère la description du lieu n° idnum par un appel au serveur
+xhr.open('GET','/courbe/'+e.target.idnum + "-" + datedeb +"-"+ datefin + "-" + choixcour,true);  // on récupère la description du lieu n° idnum par un appel au serveur
 xhr.send();
 }
 
