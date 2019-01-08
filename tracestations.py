@@ -1,37 +1,35 @@
-# -*- coding: utf-8 -*-
-"""
-Éditeur de Spyder
-
-Ceci est un script temporaire.
-"""
 
 import sqlite3 as sq
 import numpy as np
 import matplotlib.pyplot as plt
 
-base = sq.connect('acoucite-mesures.db')
-b = base.cursor()
 
+def affcourbe(donneesc):
+    """
+    donneesc : [nomstat, y deb , m deb , d deb , y fin , m fin , d fin , courbe]
+    """
+    nomstat="'"+donneesc[0]+"'"
+    conn = sq.connect('acoucite-mesures.db')
+    c = conn.cursor()
+    c.execute("SELECT lday FROM 'acoucite-mesures' WHERE procedure = "+nomstat)
+    vlday = c.fetchall()
+    print(vlday)
+    lday=[]
+    for i in range(len(vlday)):
+        lday+=[float(vlday[i][0])]
     
-b.execute("SELECT 'time_iso' AND 'lday' FROM 'acoucite-mesures' WHERE 'procedure' = 'AF01' ")
-
-r = b.fetchall()
-
-debut=50
-fin=150
-t=np.linspace(debut,fin,fin-debut+1)
-
-vecteur=[]
-
-for i in range(len(t)):
-    vecteur+=[r[i][2]]
     
-plt.plot(t,vecteur)
-plt.show()
-
-
-
-
-
-
-
+    c.execute("SELECT time_iso FROM 'acoucite-mesures' WHERE procedure = "+nomstat)
+    vtime = c.fetchall()
+    
+    
+    
+    
+    t=np.linspace(0,len(vtime),len(vtime))
+    print(t)
+    
+    
+    plt.plot(t,lday)
+    plt.show()
+    
+affcourbe(['AF01'])
