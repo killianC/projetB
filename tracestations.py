@@ -9,20 +9,18 @@ def affcourbe(donneesc):
     donneesc : [nomstat, y deb , m deb , d deb , y fin , m fin , d fin , courbe]
     """
     nomstat="'"+donneesc[0]+"'"
+    courbechoix=donneesc[7]
     conn = sq.connect('acoucite-mesures.db')
     c = conn.cursor()
-    c.execute("SELECT lday FROM 'acoucite-mesures' WHERE procedure = "+nomstat)
+    c.execute("SELECT "+courbechoix+" FROM 'acoucite-mesures' WHERE procedure = "+nomstat)
     vlday = c.fetchall()
-    print(vlday)
     lday=[]
     for i in range(len(vlday)):
         lday+=[float(vlday[i][0])]
     
     
-    c.execute("SELECT time_iso FROM 'acoucite-mesures' WHERE procedure = "+nomstat)
+    c.execute("SELECT time_iso time_iso FROM 'acoucite-mesures' WHERE procedure = "+nomstat)
     vtime = c.fetchall()
-    
-    
     
     
     t=np.linspace(0,len(vtime),len(vtime))
@@ -32,4 +30,4 @@ def affcourbe(donneesc):
     plt.plot(t,lday)
     plt.show()
     
-affcourbe(['AF01'])
+affcourbe(['AF01',None,None,None,None,None,None,'lden'])
