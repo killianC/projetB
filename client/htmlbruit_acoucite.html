@@ -37,6 +37,7 @@
 
 
 <script>
+
 // Creation d'une carte dans la balise div "map", et positionne la vue sur un point donné et un niveau de zoom
 var map = L.map('map').setView([45.755,4.855], 11);
 // Ajout d'une couche de dalles OpenStreetMap
@@ -71,6 +72,12 @@ var interm = document.getElementById('chcour')
 var choixcour = interm.options[interm.selectedIndex].value
 xhr.open('GET','/courbe/'+e.target.idnum + "-" + datedeb +"-"+ datefin + "-" + choixcour,true);  // on récupère la description du lieu n° idnum par un appel au serveur
 xhr.send();
+xhr.load= function() {  
+	var url = this.responseText;
+	url = '/bdd/'+url
+	
+
+  };
 }
 
 </script>
