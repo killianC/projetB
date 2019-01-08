@@ -37,8 +37,12 @@ label {
 }
 
 #map {
-	border : 0.5em solid rgba(255,255,255,0.5)
+	border : 0.5em solid rgba(255,255,255,0.5);
 }
+
+#graphe {
+	width : 20em;
+}	 
 
 table {
 margin : auto;
