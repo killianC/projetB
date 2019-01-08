@@ -1,4 +1,4 @@
-# Lien du serveur :
+# Lien du site :
 # http://localhost:8080/htmlbruit_acoucite.html
 
 #test
