@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>  
+
+<script src="leaflet.js"> // insertion bibliothèque Leaflet : http://leafletjs.com/ </script>
+
+<title>Exemple de carte glissante</title>
+<link rel="stylesheet" type="text/css" href="leaflet.css" /> 
+<link rel="stylesheet" type="text/css" href="style.css"/>
+
+<meta charset="utf-8">
+  
+<body onload="load_data();">  <!-- Récupération des données avec le chargement de la page -->
+
+  <h1>Mesure de bruit par le réseau Acoucité</h1>
+ 
+  <!-- Zone pour l'insertion de la carte OSM via Leaflet -->
+ 
+  <div>
+  <div id="map"></div>  
+  <p/>
+  <!-- Zone pour l'affichage dynamique des descriptions -->
+  <p id="description"></p>
+  <fieldset>
+  <table>
+  <caption>Choisisez vos paramètres d'affichage</caption>
+  <tr>
+  <td><label>Date de debut: <input type=date name="Deb" id="deb" value="2008-01-02" min="2008-01-02" max="2018-11-02"></label></td>
+  <td><label>Date de fin: <input type=date name="Fin" id="fin" value="2018-11-02" min="2008-01-02" max="2018-11-02"></label></td>
+  <td><select name="courbe" id="chcour">
+	<option value="lden" selected="selected">moyenne</option>
+	<option value="lday">jour</option>
+	<option value="levening">soir</option>
+	<option value="lnight">nuit</option>
+  </select></td>
+  </table>
+  </fieldset>  
+ </body>
+
+
+<script>
+// Creation d'une carte dans la balise div "map", et positionne la vue sur un point donné et un niveau de zoom
+var map = L.map('map').setView([45.755,4.855], 11);
+// Ajout d'une couche de dalles OpenStreetMap
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+     }).addTo(map);
+	 
+function load_data () {
+var xhr = new XMLHttpRequest();
+xhr.onload = function() {   // fonction callback
+    // récupération des données renvoyées par le serveur
+	var data = JSON.parse(this.responseText);
+    // boucle sur les enregistrements renvoyés
+    for ( n = 0; n < data.length; n++ ) {
+    // insertion d'un marqueur à la position, attachement d'une popup, capture de l'évènement "clic'
+	  L.marker([data[n].lat,data[n].lon]).addTo(map)
+        .bindPopup(data[n].name)
+		.addEventListener('click',OnMarkerClick)
+		.idnum=data[n].id;   // propriété personnalisée ajouté au marqueur
+	  }
+  };
+xhr.open('GET','/location',true);
+xhr.send();
+}
+
+
+function OnMarkerClick (e) {
+var xhr = new XMLHttpRequest();
+var datedeb = document.getElementById('deb').value
+var datefin = document.getElementById('fin').value
+var interm = document.getElementById('chcour')
+var choixcour = interm.options[interm.selectedIndex].value
+document.getElementById('description').innerHTML = datedeb +"-"+ datefin + "-" +choixcour
+xhr.onload = function() {   // fonction callback
+    // récupération des données renvoyées par le serveur
+	var data = JSON.parse(this.responseText);
+
+  };
+xhr.open('GET','/description/'+e.target.idnum,true);  // on récupère la description du lieu n° idnum par un appel au serveur
+xhr.send();
+}
+
+</script>
