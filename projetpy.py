@@ -1,8 +1,6 @@
 # Lien du site :
 # http://localhost:8080/htmlbruit_acoucite.html
 
-#test
-
 import http.server
 import socketserver
 from urllib.parse import urlparse, parse_qs, unquote
