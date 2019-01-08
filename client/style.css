@@ -46,6 +46,10 @@ table td {
 /* contenu de la page */
 body > * {   padding-left: 10px; }
 
+
+/* polices de caractères */
+body { font-family: Lucida Sans Unicode ; }
+
 /* positionnement des champs */
 label { display: block; }
 label span { display: inline-block; width: 5em; height: 1.5em; }
