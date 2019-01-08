@@ -6,6 +6,9 @@ import socketserver
 from urllib.parse import urlparse, parse_qs, unquote
 import json
 import sqlite3
+import datetime as dt
+import matplotlib.dates as pltd
+import matplotlib.pyplot as plt
 
 # définition du handler
 class RequestHandler(http.server.SimpleHTTPRequestHandler):
@@ -34,8 +37,12 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
             nomstat=data[donneesc[0]-1]["name"][-6:]
         else:
             nomstat=data[donneesc[0]-1]["name"][-4:]
+        
         donneesc[0]=nomstat
-        print(donneesc)
+        self.creecourbe(self.path_info[1],donneesc)
+        html = '<img src="'+self.path_info[1]+'.png'+'"width="100%">'
+        headers = [('Content-Type','text/html;charset=utf-8')]
+        self.send(html,headers)
         
     else:
       self.send_static()
@@ -60,6 +67,39 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
       return(data)
       
       
+  def creecourbe(self,url,donneesc):
+    """
+    donneesc : [nomstat, y deb , m deb , d deb , y fin , m fin , d fin , courbe]
+    """
+    datedeb="'"+str(donneesc[1])+'-'+str(donneesc[2])+'-'+str(donneesc[3])+"'"
+    datefin="'"+str(donneesc[4])+'-'+str(donneesc[5])+'-'+str(donneesc[6])+'Z'+"'"
+    print(datedeb,datefin)
+    nomstat="'"+donneesc[0]+"'"
+    courbechoix=donneesc[7]
+    conn = sqlite3.connect('acoucite-mesures.db')
+    c = conn.cursor()
+    
+    c.execute("SELECT time_iso FROM 'acoucite-mesures' WHERE procedure = "+nomstat+" AND time_iso > "+datedeb+" AND time_iso < "+datefin)
+    vtime = c.fetchall()
+    t = [pltd.date2num(dt.date(int(a[0][:4]),int(a[0][5:7]),int(a[0][8:10]))) for a in vtime]  
+
+    
+    c.execute("SELECT "+courbechoix+" FROM 'acoucite-mesures' WHERE procedure = "+nomstat+" AND time_iso > "+datedeb+" AND time_iso < "+datefin)
+    val = c.fetchall()
+    vall=[]
+    n=len(val)
+    for k in range (n):
+        if val[n-k-1][0]=='None':
+            val.pop(n-k-1)
+            t.pop(n-k-1)
+        else:
+            vall.append(float(val[n-k-1][0]))
+    vall.reverse()
+    plt.plot_date(t,vall,linewidth=1, linestyle='-', marker='o')
+    fichier = url+'.png'
+    plt.savefig('client/bdd/{}'.format(fichier))
+    
+    
   # méthode pour traiter les requêtes HEAD
   def do_HEAD(self):
       self.send_static()
