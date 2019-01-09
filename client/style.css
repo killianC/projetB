@@ -38,12 +38,14 @@ label {
 
 #map {
 	border : 0.5em solid rgba(255,255,255,0.5);
-	width : 50em;
-	margin-right : 2em;
+	width : 625px;
+	margin : auto;
+	
+	
 }
 
 #graphe {
-	width : 38em;
+	width : 615px;
 	margin-left : 2em;
 }	 
 

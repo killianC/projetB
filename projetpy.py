@@ -71,7 +71,6 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
     """
     datedeb="'"+str(donneesc[1])+'-'+'0'*(2-len(str(donneesc[2])))+str(donneesc[2])+'-'+'0'*(2-len(str(donneesc[3])))+str(donneesc[3])+"'"
     datefin="'"+str(donneesc[4])+'-'+'0'*(2-len(str(donneesc[5])))+str(donneesc[5])+'-'+'0'*(2-len(str(donneesc[6])))+str(donneesc[6])+'Z'+"'"
-    print(datedeb,datefin)
     nomstat="'"+donneesc[0]+"'"
     courbechoix=donneesc[7]
     conn = sqlite3.connect('acoucite-mesures.db')
@@ -93,8 +92,12 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
         else:
             vall.append(float(val[n-k-1][0]))
     vall.reverse()
+
     plt.clf()
     plt.plot_date(t,vall,linewidth=1, linestyle='-', marker='o')
+    plt.xlabel('Date')
+    plt.ylabel('Niveau sonore en Db')
+    plt.title('Niveau sonore de la station '+nomstat +' en fonction du temps')
     fichier = url+'.png'
     plt.savefig('client/bdd/{}'.format(fichier))
     
