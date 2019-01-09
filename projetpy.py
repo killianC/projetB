@@ -108,7 +108,7 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
     plt.clf()
     plt.plot_date(t,vall,linewidth=1, linestyle='-', marker='o')
     plt.xlabel('Date')
-    plt.ylabel('Niveau sonore en Db')
+    plt.ylabel('Niveau sonore en dB')
     plt.title('Niveau sonore de la station '+nomstat +' en fonction du temps')
     fichier = url+'.png'
     plt.savefig('client/bdd/{}'.format(fichier))
