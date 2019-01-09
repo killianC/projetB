@@ -1,6 +1,6 @@
 ﻿/* fond de page */
 body {
-  background-image: linear-gradient(45deg, #eeeeeeee,#222222, #eeeeeeee);
+  background-image: linear-gradient(0deg, #ffffff,#222222);
   background-size: 100%;
   background-repeat: no-repeat;
   color: white;
@@ -38,10 +38,12 @@ label {
 
 #map {
 	border : 0.5em solid rgba(255,255,255,0.5);
+	width : 50em;
+	margin-right : 2em;
 }
 
 #graphe {
-	width : 15cm;
+	width : 38em;
 	margin-left : 2em;
 }	 
 
