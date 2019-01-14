@@ -70,21 +70,27 @@ p {
 #chcour {
 	width : 300px;
 	height : 35px;
-	font-family: Lucida Sans Unicode
+	font-family: Lucida Sans Unicode;
+	font-size : 120%;
 }
 
 #deb{
+	color : black;
 	width : 300px;
 	height : 30px;
 	margin : 1em;
 	margin-top : 0.1em; 	
+	font-family: Lucida Sans Unicode
 }
 
 #fin{
+	color : black;
 	width : 300px;
 	height : 30px;
 	margin : 1em;
 	margin-top : 0.1em; 
+	font-family: Lucida Sans Unicode;
+	font-size : 6;
 	
 }
 
