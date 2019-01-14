@@ -29,7 +29,7 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
     elif self.path_info[0] == "courbe":
         donneesc = self.path_info[1]
         verifdate = donneesc.split("-")
-        if verifdate[1]+verifdate[2]+verifdate[3] < verifdate[4]+verifdate[5]+verifdate[6] :
+        if len(verifdate) == 8 and verifdate[1]+verifdate[2]+verifdate[3] < verifdate[4]+verifdate[5]+verifdate[6] :
             conn = sqlite3.connect('client/courbesstockees.db')
             c = conn.cursor()
             c.execute("SELECT Nom FROM 'courbesstockees'")
@@ -110,7 +110,8 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
     vall.reverse()
 
     plt.clf()
-    plt.plot_date(t,vall,linewidth=1, linestyle='-', marker='o')
+    plt.plot_date(t,vall,linewidth=1, linestyle='-', marker='o',color='green')
+    plt.grid()
     plt.xlabel('Date')
     plt.ylabel('Niveau sonore en dB')
     plt.title('Niveau sonore de la station '+nomstat +' en fonction du temps')
@@ -125,15 +126,7 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
 
   # méthode pour traiter les requêtes POST - non utilisée dans l'exemple
   def do_POST(self):
-    self.init_params()
-
-    # requête générique
-    if self.path_info[0] == "service":
-      self.send_html(('<p>Path info : <code>{}</code></p><p>Chaîne de requête : <code>{}</code></p>' \
-          + '<p>Corps :</p><pre>{}</pre>').format('/'.join(self.path_info),self.query_string,self.body));
-
-    else:
-      self.send_error(405)
+    self.send('erreur')
 
 
   # on envoie le document statique demandé
