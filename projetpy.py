@@ -28,31 +28,35 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
 
     elif self.path_info[0] == "courbe":
         donneesc = self.path_info[1]
-        conn = sqlite3.connect('client/courbesstockees.db')
-        c = conn.cursor()
-        c.execute("SELECT Nom FROM 'courbesstockees'")
-        r = c.fetchall()
-        noms=[]
-        for nom in r:
-            noms.append(nom[0])
-        if len(noms)!=0 and donneesc in noms:
-            self.send(self.path_info[1])
-        else:
-            donneesc = donneesc.split("-")
-            for k in range (len(donneesc)):
-                if k!=len(donneesc)-1:
-                    donneesc[k]=int(donneesc[k])
-            data=self.data()
-            if data[donneesc[0]-1]["name"][-6:-2]=="CF22":
-                nomstat=data[donneesc[0]-1]["name"][-6:]
-            else:
-                nomstat=data[donneesc[0]-1]["name"][-4:]
-            donneesc[0]=nomstat
-            self.creecourbe(self.path_info[1],donneesc)
+        verifdate = donneesc.split("-")
+        if verifdate[1]+verifdate[2]+verifdate[3] < verifdate[4]+verifdate[5]+verifdate[6] :
+            conn = sqlite3.connect('client/courbesstockees.db')
             c = conn.cursor()
-            c.execute("INSERT INTO 'courbesstockees'('Nom') VALUES ('"+self.path_info[1]+"');")
-            conn.commit()
-            self.send(self.path_info[1])
+            c.execute("SELECT Nom FROM 'courbesstockees'")
+            r = c.fetchall()
+            noms=[]
+            for nom in r:
+                noms.append(nom[0])
+            if len(noms)!=0 and donneesc in noms:
+                self.send(self.path_info[1])
+            else:
+                donneesc = donneesc.split("-")
+                for k in range (len(donneesc)):
+                    if k!=len(donneesc)-1:
+                        donneesc[k]=int(donneesc[k])
+                data=self.data()
+                if data[donneesc[0]-1]["name"][-6:-2]=="CF22":
+                    nomstat=data[donneesc[0]-1]["name"][-6:]
+                else:
+                    nomstat=data[donneesc[0]-1]["name"][-4:]
+                donneesc[0]=nomstat
+                self.creecourbe(self.path_info[1],donneesc)
+                c = conn.cursor()
+                c.execute("INSERT INTO 'courbesstockees'('Nom') VALUES ('"+self.path_info[1]+"');")
+                conn.commit()
+                self.send(self.path_info[1])
+        else :
+            None
         
     else:
       self.send_static()
