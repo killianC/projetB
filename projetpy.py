@@ -56,7 +56,7 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
                 conn.commit()
                 self.send(self.path_info[1])
         else :
-            None
+            self.send('erreur')
         
     else:
       self.send_static()

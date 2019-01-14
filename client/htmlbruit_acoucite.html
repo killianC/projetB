@@ -84,8 +84,13 @@ xhr.open('GET','/courbe/'+e.target.idnum + "-" + datedeb +"-"+ datefin + "-" + c
 xhr.send();
 xhr.onload= function() {  
 	var url = this.responseText;
-	url = '/bdd/'+url+'.png'
-	document.getElementById('graphe').src = url;
+	if (url == 'erreur') {
+		document.getElementById('graphe').src = '/images/erreur.jpg';
+	}
+	else {
+		url = '/bdd/'+url+'.png';
+		document.getElementById('graphe').src = url;
+	};
   };
 }
 
