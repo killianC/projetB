@@ -29,15 +29,18 @@
   <table>
   <caption>Choisissez vos paramètres d'affichage</caption>
   <tr>
-  <td><label>Date de début: <input type=date name="Deb" id="deb" value="2008-01-02" min="2008-01-02" max="2018-11-02"></label></td>
-  <td><label>Date de fin: <input type=date name="Fin" id="fin" value="2018-11-02" min="2008-01-02" max="2018-11-02"></label></td>
-  <td><p>Choix de la courbe:</p></td>
-  <td><select name="courbe" id="chcour">
+  <td><table><tr><p> Date de début :</p></tr><tr><input type=date name="Deb" id="deb" value="2008-01-02" min="2008-01-02" max="2018-11-02"></tr></table></td>
+  <td><label><table><tr><p> Date de fin :</p></tr><tr><input type=date name="Fin" id="fin" value="2008-01-02" min="2008-01-02" max="2018-11-02"></tr></table></td>
+  <td>
+  <table><tr><p>Choix de la courbe :</p></tr>
+  <tr><select name="courbe" id="chcour">
 	<option value="lden" selected="selected">moyenne</option>
 	<option value="lday">jour</option>
 	<option value="levening">soir</option>
 	<option value="lnight">nuit</option>
-  </select></td>
+  </select></tr>
+  </table>
+  </td>
   </table>
   </fieldset>  
  </body>

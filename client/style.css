@@ -23,7 +23,7 @@ h1 {
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   margin-bottom: 1.33em;
-  repeat-x :repeat ;
+  width : 100%;
 }
 
 caption {
@@ -51,33 +51,45 @@ p {
 }
 
 #graphe {
-	width : 615px;
-	margin-left : 2em;
+	width : 600px;
+	margin-left : 1em;
 }	 
 
 #chcour {
 	width : 300px;
-	height : 30px;
+	height : 35px;
 	font-family: Lucida Sans Unicode
 }
 
 #deb{
 	width : 300px;
 	height : 30px;
-	
+	margin : 1em;
+	margin-top : 0.1em; 	
 }
 
 #fin{
 	width : 300px;
 	height : 30px;
+	margin : 1em;
+	margin-top : 0.1em; 
 	
+}
+
+select{
+	margin : 1em;
+	margin-top : 0.05em; 
+}
+
+caption{
+	width : auto
 }
 
 table {
 margin : auto;
 }
 table td {
-	margin : 5 em;
+	margin : auto;
 }
 
 /* contenu de la page */
