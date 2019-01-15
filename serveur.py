@@ -108,12 +108,10 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
         else:
             vall.append(float(val[n-k-1][0]))
     vall.reverse()
-
     plt.clf()
     plt.plot_date(t,vall,linewidth=1, linestyle='-', marker='o',color='green')
     plt.grid()
-    plt.xticks(rotation=12)
-    plt.xlabel('Date')
+    plt.xticks(rotation=15)
     plt.ylabel('Niveau sonore en dB')
     plt.title('Niveau sonore de la station '+nomstat +' en fonction du temps')
     fichier = url+'.png'
