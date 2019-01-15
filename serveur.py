@@ -15,17 +15,19 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
 
   # sous-répertoire racine des documents statiques
   static_dir = '/client'
-  # version du serveur
-  server_version = 'ProjetB/serveurpy.py/0.1'
+  server_version = 'ProjetB/serveurpy.py/1.2'
 
   # on surcharge la méthode qui traite les requêtes GET
   def do_GET(self):
     self.init_params()
 
     # requete location - retourne la liste de lieux et leurs coordonnées géographiques
+    # Sert à l'initialisation du site 
     if self.path_info[0] == "location":     
         self.send_json(self.data())
 
+    # Gestion de l'affichage des courbes:
+    # Génère une courbe en vol et envoie son adresse au site, ou envoie juste l'adresse si elle existe déjà
     elif self.path_info[0] == "courbe":
         donneesc = self.path_info[1]
         verifdate = donneesc.split("-")
@@ -63,8 +65,7 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
 
  
     
-  #Methode annexe 
-    
+  #Génere un dictionnaire avec les stations, lat, lon et nom a partir de la bdd
   def data(self):
       conn = sqlite3.connect('stations-acoucite-2018.db')
       c = conn.cursor()
@@ -80,7 +81,8 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
           data.append(dicotempo)
       return(data)
       
-      
+    
+    #Génération des courbes à proprement parler
   def creecourbe(self,url,donneesc):
     """
     donneesc : [nomstat, y deb , m deb , d deb , y fin , m fin , d fin , courbe]
