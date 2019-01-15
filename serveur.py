@@ -109,9 +109,16 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
             vall.append(float(val[n-k-1][0]))
     vall.reverse()
     plt.clf()
-    plt.plot_date(t,vall,linewidth=1, linestyle='-', marker='o',color='green')
+    if donneesc[7] == 'lden':  
+        plt.plot_date(t,vall,linewidth=1, linestyle='-', marker='o',color='blue')
+    elif donneesc[7] == 'lday':
+        plt.plot_date(t,vall,linewidth=1, linestyle='-', marker='o',color='red')
+    elif donneesc[7] == 'levening':
+        plt.plot_date(t,vall,linewidth=1, linestyle='-', marker='o',color='green')
+    elif donneesc[7] == 'lnight':
+        plt.plot_date(t,vall,linewidth=1, linestyle='-', marker='o',color='black')
     plt.grid()
-    plt.xticks(rotation=15)
+    plt.xticks(rotation=25)
     plt.ylabel('Niveau sonore en dB')
     plt.title('Niveau sonore de la station '+nomstat +' en fonction du temps')
     fichier = url+'.png'
