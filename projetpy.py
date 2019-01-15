@@ -112,6 +112,7 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
     plt.clf()
     plt.plot_date(t,vall,linewidth=1, linestyle='-', marker='o',color='green')
     plt.grid()
+    plt.xticks(rotation=12)
     plt.xlabel('Date')
     plt.ylabel('Niveau sonore en dB')
     plt.title('Niveau sonore de la station '+nomstat +' en fonction du temps')
